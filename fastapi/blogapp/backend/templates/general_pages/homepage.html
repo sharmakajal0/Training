@@ -4,3 +4,21 @@
 {% block title %} 
   <title>Blog App</title>
 {% endblock %} 
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      {% for blog in blogs %}
+        <div class="container">
+          {% with obj=blog %}
+            {%include "components/cards.html" %}
+          {% endwith %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+{% with msg=msg %}
+  {% include "components/alerts.html" %}
+{% endwith %}

@@ -1,0 +1,29 @@
+{% extends "shared/base.html" %}
+
+
+{% block title %}
+  <title>Your Blog</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+  <div class="row">
+    <div class="col">
+      <h1 class="display-5">Your Blog</h1>
+    </div>
+  </div>
+
+  <div class="row">
+      <table class="table table-striped table-hover">
+        <tbody>
+          <tr>
+            <td colspan="2" style="text-align: center;">{{blog.title}}</td>
+          </tr>
+          <tr>
+            <td colspan="2">{{blog.content}}</td>
+          </tr>
+        </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
