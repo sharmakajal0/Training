@@ -15,6 +15,6 @@ class Solution:
 
 
 
-nums = [1,1,2]
+nums = list(map(int, input().split(" ")))
 sol = Solution()
 print(sol.removeDuplicates(nums))
