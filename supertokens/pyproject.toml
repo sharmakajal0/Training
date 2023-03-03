@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "supertokens"
+version = "0.1.0"
+description = "supertokens"
+authors = ["sharmakajal0 <sharma.kajal.sitm@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+supertokens-python = "^0.12.2"
+fastapi = "^0.92.0"
+setuptools = "^67.4.0"
+uvicorn = "^0.20.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
