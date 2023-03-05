@@ -14,11 +14,12 @@ client = AsyncClient()
     )
 async def create_user(request: AuthSignIn):
     url = "http://localhost:8000/auth/signinup/code"
-    if request.email == None:
+    payload = {'email': request.email}
+    if request.email is None:
         payload = {
             "phoneNumber": request.phoneNumber
         }
-    elif request.phoneNumber == None:
+    elif request.phoneNumber is None:
         payload = {
             "email": request.email
         }
