@@ -1,10 +1,16 @@
-from pydantic import BaseModel, EmailStr, validators
+from pydantic import BaseModel, EmailStr, validator
 
 
 class AuthSignIn(BaseModel):
 
     email: EmailStr = None
     phoneNumber: str = None
+
+    @validator("phoneNumber")
+    def email_and_phone_validator(cls, v, values, **kwargs):
+        if 'email' in values and v == 'phoneNumber':
+            raise ValueError('cannot have both fields')
+        return v
 
 
 class AuthSignInReuse(BaseModel):
