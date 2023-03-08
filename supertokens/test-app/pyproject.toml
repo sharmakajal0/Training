@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "test-app"
+version = "0.1.0"
+description = ""
+authors = ["sharmakajal0 <sharma.kajal.sitm@gmail.com>"]
+readme = "README.md"
+packages = [{include = "test_app"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

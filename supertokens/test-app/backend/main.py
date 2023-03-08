@@ -19,7 +19,7 @@ init(
     ),
     supertokens_config=SupertokensConfig(
         # https://try.supertokens.com is for demo purposes. Replace this with the address of your core instance (sign up on supertokens.com), or self host a core.
-        connection_uri="http://localhost:3567/",
+        connection_uri="http://localhost:3567",
         # api_key=<API_KEY(if configured)>
     ),
     framework='fastapi',
@@ -27,9 +27,9 @@ init(
         session.init(), # initializes session features
         passwordless.init(
             flow_type="USER_INPUT_CODE",
-            contact_config=ContactEmailOrPhoneConfig()
+            contact_config=ContactEmailOrPhoneConfig(),
         ),
-        dashboard.init(api_key="kajalkajal")
+        dashboard.init(api_key="chandan123")
     ],
     mode='asgi' # use wsgi if you are running using gunicorn
 )

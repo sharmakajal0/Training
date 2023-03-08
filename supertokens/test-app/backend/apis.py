@@ -91,3 +91,14 @@ async def signup(request: FormFields):
         }
     )
     return result.json()
+
+@router.get("/auth/dashboard", status_code=status.HTTP_200_OK, name='dashboard')
+async def get_dashboard(api_key: str):
+    url= "http://127.0.0.1:8000/auth/dashboard"
+    result = await client.get(
+        url=url,
+        param={"api_key": api_key}
+    )
+
+    return result.json()
+
