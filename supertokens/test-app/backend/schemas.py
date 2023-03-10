@@ -12,6 +12,9 @@ class AuthSignIn(BaseModel):
             raise ValueError('cannot have both fields')
         return v
 
+class AuthLogIn(BaseModel):
+
+    otp: str
 
 class AuthSignInReuse(BaseModel):
 

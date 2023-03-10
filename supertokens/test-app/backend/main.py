@@ -1,13 +1,34 @@
 from supertokens_python import init, InputAppInfo, SupertokensConfig, get_all_cors_headers
-from supertokens_python.recipe import passwordless, session, dashboard
+from supertokens_python.recipe.thirdpartypasswordless import Google
+from supertokens_python.recipe import thirdpartypasswordless, session, dashboard
+from supertokens_python.recipe.session.interfaces import RecipeInterface
 
 from supertokens_python.recipe.passwordless import ContactEmailOrPhoneConfig
 
 from fastapi import FastAPI
+from typing import Dict, Any, Union
 from starlette.middleware.cors import CORSMiddleware
 from supertokens_python.framework.fastapi import get_middleware
 
 from apis import router
+
+
+def override_functions(original_implementation: RecipeInterface):
+    original_implementation_create_new_session = original_implementation.create_new_session
+
+    async def create_new_session(request: Any, user_id: str,
+                                 access_token_payload: Union[None, Dict[str, Any]],
+                                 session_data: Union[None, Dict[str, Any]], user_context: Dict[str, Any]):
+
+        if access_token_payload is None:
+            access_token_payload = {}
+
+        access_token_payload['role'] = 'user'
+
+        return await original_implementation_create_new_session(request, user_id, access_token_payload, session_data, user_context)
+
+    original_implementation.create_new_session = create_new_session
+    return original_implementation
 
 init(
     app_info=InputAppInfo(
@@ -24,12 +45,27 @@ init(
     ),
     framework='fastapi',
     recipe_list=[
-        session.init(), # initializes session features
-        passwordless.init(
+        session.init(
+            jwt=session.JWTConfig(
+                enable=True
+            ),
+            override=session.InputOverrideConfig(functions=override_functions)
+        ), # initializes session features
+        dashboard.init(api_key="chandan123"),
+        thirdpartypasswordless.init(
+            # email_delivery=EmailDeliveryConfig(override=custom_email_delivery),
             flow_type="USER_INPUT_CODE",
             contact_config=ContactEmailOrPhoneConfig(),
+            providers=[
+                Google(
+                    client_id='1060725074195-kmeum4crr01uirfl2op9kd5acmi9jutn.apps.googleusercontent.com',
+                    client_secret='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'
+                    # ), Facebook(
+                    #     client_id='FACEBOOK_CLIENT_ID',
+                    #     client_secret='FACEBOOK_CLIENT_SECRET'
+                )
+            ],
         ),
-        dashboard.init(api_key="chandan123")
     ],
     mode='asgi' # use wsgi if you are running using gunicorn
 )
