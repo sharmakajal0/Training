@@ -1,5 +1,6 @@
+import uvicorn
 from supertokens_python import init, InputAppInfo, SupertokensConfig, get_all_cors_headers
-from supertokens_python.recipe.thirdpartypasswordless import Google
+from supertokens_python.recipe.thirdpartypasswordless import Google, Facebook
 from supertokens_python.recipe import thirdpartypasswordless, session, dashboard
 from supertokens_python.recipe.session.interfaces import RecipeInterface
 
@@ -49,7 +50,9 @@ init(
             jwt=session.JWTConfig(
                 enable=True
             ),
-            override=session.InputOverrideConfig(functions=override_functions)
+            override=session.InputOverrideConfig(functions=override_functions),
+            cookie_secure=True,
+            anti_csrf='VIA_TOKEN'
         ), # initializes session features
         dashboard.init(api_key="chandan123"),
         thirdpartypasswordless.init(
@@ -60,9 +63,10 @@ init(
                 Google(
                     client_id='1060725074195-kmeum4crr01uirfl2op9kd5acmi9jutn.apps.googleusercontent.com',
                     client_secret='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'
-                    # ), Facebook(
-                    #     client_id='FACEBOOK_CLIENT_ID',
-                    #     client_secret='FACEBOOK_CLIENT_SECRET'
+                    ), 
+                Facebook(
+                    client_id='160583663470043',
+                    client_secret='5bee35414928c13c9f089d284744bc0f'
                 )
             ],
         ),
@@ -84,3 +88,6 @@ app.add_middleware(
     allow_methods=["GET", "PUT", "POST", "DELETE", "OPTIONS", "PATCH"],
     allow_headers=["Content-Type"] + get_all_cors_headers(),
 )
+
+if __name__  == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)

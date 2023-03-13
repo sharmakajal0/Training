@@ -29,24 +29,24 @@ headers = {
 }
 
 
-# @router.post(
-#     "/auth/signin/code",
-#     status_code=status.HTTP_200_OK,
-#     name="Create User"
-#     )
-# async def create_user(request: AuthSignIn):
-#     url = "http://localhost:8000/auth/signinup/code"
-#     payload = {'email': request.email}
-#     if request.email is None:
-#         payload = {
-#             "phoneNumber": request.phoneNumber
-#         }
-#     elif request.phoneNumber is None:
-#         payload = {
-#             "email": request.email
-#         }
-#     result = await client.post(url=url, headers=headers, json=payload)
-#     return result.json()
+@router.post(
+    "/auth/signin/code",
+    status_code=status.HTTP_200_OK,
+    name="Create User"
+    )
+async def create_user(request: AuthSignIn):
+    url = "http://localhost:8000/auth/signinup/code"
+    payload = {'email': request.email}
+    if request.email is None:
+        payload = {
+            "phoneNumber": request.phoneNumber
+        }
+    elif request.phoneNumber is None:
+        payload = {
+            "email": request.email
+        }
+    result = await client.post(url=url, headers=headers, json=payload)
+    return result.json()
 
 
 @router.post(
@@ -64,30 +64,30 @@ async def create_resend_code(request: AuthSignInCodeResend):
     return result.json()
 
 
-# @router.post("/verify_otp",
-#                  status_code=status.HTTP_200_OK,
-#                  response_model=None,
-#                  response_description="",
-#                  name="Verify OTP", )
-# async def login(request: AuthSignInConsume) -> Union[Dict, Any]:
-#     url="http://127.0.0.1:8000/auth/signinup/code/consume"
-#     payload = {
-#         "userInputCode": request.userInputCode,
-#         "deviceId": request.deviceId,
-#         "preAuthSessionId": request.preAuthSessionId, }
-#     response = await client.post(url=url, headers=headers, json=payload)
-#     access_token = response.cookies.get("st-access-token")
+@router.post("/verify_otp",
+                 status_code=status.HTTP_200_OK,
+                 response_model=None,
+                 response_description="",
+                 name="Verify OTP", )
+async def login(request: AuthSignInConsume) -> Union[Dict, Any]:
+    url="http://127.0.0.1:8000/auth/signinup/code/consume"
+    payload = {
+        "userInputCode": request.userInputCode,
+        "deviceId": request.deviceId,
+        "preAuthSessionId": request.preAuthSessionId, }
+    response = await client.post(url=url, headers=headers, json=payload)
+    access_token = response.cookies.get("st-access-token")
 
 
-#     if access_token:
-#         return JSONResponse(content={
-#             "sAccessToken": response.cookies.get("st-access-token").replace('"', ""),
-#             "sRefreshToken": response.cookies.get("st-refresh-token").replace('"', ""),
-#             "sIdRefreshToken": response.cookies.get("st-refresh-token").replace('"', "")}
-#         )
+    if access_token:
+        return JSONResponse(content={
+            "sAccessToken": response.cookies.get("st-access-token").replace('"', ""),
+            "sRefreshToken": response.cookies.get("st-refresh-token").replace('"', ""),
+            "sIdRefreshToken": response.cookies.get("st-refresh-token").replace('"', "")}
+        )
 
-#     else:
-#         return response.json()
+    else:
+        return response.json()
 
 @router.get("/check_email", status_code=status.HTTP_200_OK, name="email exists")
 async def email_exists(email: str):
@@ -133,9 +133,7 @@ async def dashboard(request: Request):
 
         user_id = session.get_user_id()
 
-        print(user_id)
         return user_id
-        # TODO
     except Exception as e:
         if isinstance(e, TryRefreshTokenError) or isinstance(e, UnauthorisedError):
             return RedirectResponse(

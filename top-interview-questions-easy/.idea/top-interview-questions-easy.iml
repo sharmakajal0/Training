@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/Array" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/Strings" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/linked_list" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/sorting" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/venv" />
+    </content>
+    <orderEntry type="jdk" jdkName="Python 3.11 (top-interview-questions-easy)" jdkType="Python SDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
