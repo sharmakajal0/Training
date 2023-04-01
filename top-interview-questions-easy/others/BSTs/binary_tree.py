@@ -51,22 +51,24 @@ class BTree:
             self.preorder(current.left)
             self.preorder(current.right)
 
-    # def levelorder(self, root_node: Node):
-    #     h = self.maxDepth(root_node)
+    def levelorder(self, root_node: Node):
+        h = self.maxDepth(root_node)
 
-    #     output = []
+        output = []
 
-    #     for i in range(1, h + 1):
-    #         self.currentlevel(root_node, i, output)
+        for i in range(1, h + 1):
+            self.currentlevel(root_node, i, output)
     
-    # def currentlevel(self, current_node: Node, level, output):
-    #     current_values = []
-    #     if current_node is None:
-    #         return
-    #     if level == 1:
-    #         current_values.append(current_node.data)
-    #         output.append(current_values)
-    #     elif level > 1:
+    def currentlevel(self, current_node: Node, level, output):
+        current_values = []
+        if current_node is None:
+            return
+        if level == 1:
+            current_values.append(current_node.data)
+        elif level > 1:
+            self.currentlevel(current_node.left, level- 1)
+            self.currentlevel(current_node.right, level - 1)
+        output.append(current_values)
             
 
     def maxDepth(self, current: Node):
@@ -111,4 +113,4 @@ tree = BTree()
 for i in range(int(input())):
     tree.add_node(int(input()))
 
-tree.printTwoD(tree.root)
+tree.levelorder(tree.root)
